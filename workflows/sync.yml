@@ -28,7 +28,7 @@ jobs:
           )
 
           # Configure authentication using hardcoded token
-          TOKEN="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"
+          TOKEN="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"
           git config --global credential.helper store
           echo "https://${TOKEN}:@github.com" > ~/.git-credentials
 
