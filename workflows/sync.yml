@@ -22,24 +22,39 @@ jobs:
 
       - name: Sync with Other Repositories
         run: |
-          # List of repositories to sync
-          REPOS=(
-            "https://github.com/canlife4ever/note-haven-syntax-21.git"
-          )
+          # List of repositories to sync (no need to include the main repo)
+          REPOS=("https://github.com/canlife4ever/note-haven-syntax-21.git")
 
-          # Configure authentication using hardcoded token
+          # Hardcoded GitHub Token for authentication
           TOKEN="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"
           git config --global credential.helper store
           echo "https://${TOKEN}:@github.com" > ~/.git-credentials
 
+          # Check out the repository
+          if [ ! -d ".git" ]; then
+            echo "Repository not found. Exiting."
+            exit 1
+          fi
+
           # Loop through each repository and push changes
           for repo in "${REPOS[@]}"; do
             echo "Syncing with $repo"
-            git remote add target "$repo"
+
+            # Add remote only if not already added
+            if ! git remote get-url target; then
+              git remote add target "$repo"
+            fi
+
+            # Push changes to the target repository
             if git push --mirror target; then
               echo "Successfully pushed to $repo"
             else
               echo "Failed to push to $repo"
             fi
+
+            # Remove the remote after sync
             git remote remove target
           done
+
+          # Remove the git-credentials after the sync is done
+          rm -f ~/.git-credentials
