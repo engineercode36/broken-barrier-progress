@@ -99,3 +99,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .form-input:focus {
+    @apply ring-2 ring-blue-400;
+    animation: softGlow 1.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes softGlow {
+  from {
+    box-shadow: 0 0 2px #60A5FA, 0 0 4px #60A5FA, 0 0 6px #60A5FA;
+  }
+  to {
+    box-shadow: 0 0 4px #2563EB, 0 0 8px #2563EB, 0 0 12px #2563EB;
+  }
+}
