@@ -8,13 +8,13 @@ interface QuestionChoiceProps {
 
 export const QuestionChoice = ({ onSelect, selectedValue }: QuestionChoiceProps) => {
   const choices = [
-    { value: 1, label: "Strongly Disagree", color: "from-red-600 to-red-500", borderColor: "border-red-600" },
-    { value: 2, label: "Disagree", color: "from-red-500 to-red-400", borderColor: "border-red-500" },
-    { value: 3, label: "Slightly Disagree", color: "from-red-400 to-red-300", borderColor: "border-red-400" },
-    { value: 4, label: "Neutral", color: "from-gray-400 to-gray-300", borderColor: "border-gray-400" },
-    { value: 5, label: "Slightly Agree", color: "from-green-300 to-green-400", borderColor: "border-green-400" },
-    { value: 6, label: "Agree", color: "from-green-400 to-green-500", borderColor: "border-green-500" },
-    { value: 7, label: "Strongly Agree", color: "from-green-500 to-green-600", borderColor: "border-green-600" }
+    { value: 1, label: "Strongly Disagree", text: "I completely disagree with this statement" },
+    { value: 2, label: "Disagree", text: "I disagree with this statement" },
+    { value: 3, label: "Slightly Disagree", text: "I somewhat disagree with this statement" },
+    { value: 4, label: "Neutral", text: "I neither agree nor disagree" },
+    { value: 5, label: "Slightly Agree", text: "I somewhat agree with this statement" },
+    { value: 6, label: "Agree", text: "I agree with this statement" },
+    { value: 7, label: "Strongly Agree", text: "I completely agree with this statement" }
   ];
 
   return (
@@ -37,23 +37,24 @@ export const QuestionChoice = ({ onSelect, selectedValue }: QuestionChoiceProps)
                 className="sr-only"
               />
               <motion.div
-                className={`w-16 h-16 rounded-full border-2 flex items-center justify-center
+                className={`w-16 h-16 rounded-full border flex items-center justify-center
                   ${selectedValue === choice.value
-                    ? `bg-gradient-to-r ${choice.color} border-transparent`
-                    : `${choice.borderColor} hover:border-blue-300`
+                    ? `bg-[#7FFFD4] border-transparent shadow-lg`
+                    : `border-[#7FFFD4] border-[1px] hover:border-[#7FFFD4] hover:shadow-md`
                   }`}
-                animate={selectedValue === choice.value ? { scale: [1, 1.2, 1] } : {}}
+                animate={selectedValue === choice.value ? 
+                  { scale: [1, 1.2, 1], rotate: [0, 360] } : 
+                  {}
+                }
+                transition={{ duration: 0.5 }}
               >
-                {selectedValue === choice.value && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className={`w-16 h-16 rounded-full bg-gradient-to-r ${choice.color}`}
-                  />
-                )}
+                <span className="text-sm font-medium text-gray-800">
+                  {choice.value}
+                </span>
               </motion.div>
             </div>
-            <span className="text-sm text-gray-600 text-center">{choice.label}</span>
+            <span className="text-sm font-medium text-gray-800">{choice.label}</span>
+            <span className="text-xs text-gray-600 text-center">{choice.text}</span>
           </label>
         </motion.div>
       ))}

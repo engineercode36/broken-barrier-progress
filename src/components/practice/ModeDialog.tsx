@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Timer, Zap, Hand, Clock, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 interface ModeDialogProps {
@@ -18,13 +19,24 @@ const ModeDialog = ({ open, onOpenChange, onSetMode }: ModeDialogProps) => {
   const [difficulty, setDifficulty] = useState("beginner");
 
   const handleSubmit = () => {
-    if (selectedTab === "timer") {
-      onSetMode(`Timer Mode (${minutes} minutes)`);
-    } else if (selectedTab === "level") {
-      onSetMode(`Level Mode (${difficulty})`);
-    } else {
-      onSetMode("Manual Mode");
+    switch (selectedTab) {
+      case "timer":
+        onSetMode(`Timer Mode (${minutes} minutes)`);
+        break;
+      case "level":
+        onSetMode(`Level Mode (${difficulty})`);
+        break;
+      case "manual":
+        onSetMode("Manual Mode");
+        break;
+      case "pomodoro":
+        onSetMode("Pomodoro Mode");
+        break;
+      case "exam":
+        onSetMode("Exam Mode");
+        break;
     }
+    onOpenChange(false);
   };
 
   return (
@@ -35,10 +47,27 @@ const ModeDialog = ({ open, onOpenChange, onSetMode }: ModeDialogProps) => {
         </DialogHeader>
         
         <Tabs defaultValue="timer" onValueChange={setSelectedTab}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="timer">Timer</TabsTrigger>
-            <TabsTrigger value="level">Level</TabsTrigger>
-            <TabsTrigger value="manual">Manual</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="timer" className="flex items-center gap-2">
+              <Timer className="h-4 w-4 text-[#7FFFD4]" />
+              Timer
+            </TabsTrigger>
+            <TabsTrigger value="level" className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-[#7FFFD4]" />
+              Level
+            </TabsTrigger>
+            <TabsTrigger value="manual" className="flex items-center gap-2">
+              <Hand className="h-4 w-4 text-[#7FFFD4]" />
+              Manual
+            </TabsTrigger>
+            <TabsTrigger value="pomodoro" className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-[#7FFFD4]" />
+              Pomodoro
+            </TabsTrigger>
+            <TabsTrigger value="exam" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-[#7FFFD4]" />
+              Exam
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="timer" className="mt-4">
@@ -76,12 +105,24 @@ const ModeDialog = ({ open, onOpenChange, onSetMode }: ModeDialogProps) => {
               Manual mode allows you to practice at your own pace without any time or difficulty constraints.
             </p>
           </TabsContent>
+
+          <TabsContent value="pomodoro" className="mt-4">
+            <p className="text-sm text-gray-600">
+              Practice with focused intervals and short breaks to maintain productivity.
+            </p>
+          </TabsContent>
+
+          <TabsContent value="exam" className="mt-4">
+            <p className="text-sm text-gray-600">
+              Simulates real exam conditions with strict timing and no breaks.
+            </p>
+          </TabsContent>
         </Tabs>
 
         <div className="flex justify-end mt-4">
           <Button
             onClick={handleSubmit}
-            className="rounded-xl transition-all duration-300 hover:bg-purple-50 hover:border-purple-200 hover:shadow-[0_0_15px_rgba(147,51,234,0.2)]"
+            className="rounded-xl bg-[#7FFFD4] text-gray-800 hover:bg-[#70E0C0]"
           >
             Set Mode
           </Button>

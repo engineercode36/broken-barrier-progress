@@ -15,19 +15,19 @@ export const PracticeTimer = ({ timeRemaining, isPaused, onTogglePause }: Practi
 
   return (
     <div className="mb-8 text-center flex items-center justify-center gap-3">
-      <div className="font-cursive text-3xl gradient-text">
+      <div className="font-cursive text-3xl text-[#7FFFD4]">
         {minutes}:{seconds.toString().padStart(2, '0')}
       </div>
       <Button
         variant="ghost"
         size="icon"
         onClick={onTogglePause}
-        className="rounded-full bg-white"
+        className="rounded-full hover:bg-[#7FFFD4]/10"
       >
         {isPaused ? (
-          <Play className="h-4 w-4" />
+          <Play className="h-4 w-4 text-[#7FFFD4]" />
         ) : (
-          <Pause className="h-4 w-4" />
+          <Pause className="h-4 w-4 text-[#7FFFD4]" />
         )}
       </Button>
     </div>
