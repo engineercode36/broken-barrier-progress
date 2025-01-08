@@ -1,5 +1,5 @@
 export interface Post {
-  id: string;
+  id: string;  // Changed from number to string to match Supabase UUID
   content: string;
   author: {
     name: string;
@@ -25,6 +25,6 @@ export interface Event {
 export interface Poll {
   id: string;
   question: string;
-  options: string[];  // This remains as string[] since we'll handle the conversion
+  options: string[];
   votes: number[];
 }

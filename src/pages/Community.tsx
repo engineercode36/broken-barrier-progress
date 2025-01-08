@@ -9,75 +9,108 @@ import { Leaderboard } from "@/components/community/Leaderboard";
 import { EventsList } from "@/components/community/EventsList";
 import { PollsList } from "@/components/community/PollsList";
 import { PostList } from "@/components/community/PostList";
-import { usePosts, usePolls, useEvents } from "@/hooks/community";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/components/auth/AuthProvider";
-import { Loader2 } from "lucide-react";
+import { Post, Event, Poll } from "@/types/community";
+
+const MOCK_POSTS: Post[] = [
+  {
+    id: 1,
+    content: "I've found that understanding my personality type has helped me tremendously in my career. Anyone else had similar experiences?",
+    author: {
+      name: "Sarah Johnson",
+      avatar: "https://source.unsplash.com/random/100x100?portrait=1",
+      personalityType: "The Visionary",
+      badges: ["Top Contributor", "Insightful Thinker"],
+      points: 1250,
+    },
+    likes: 24,
+    comments: 5,
+    timestamp: "2 hours ago",
+  },
+  {
+    id: 2,
+    content: "Looking for advice on how to better communicate with opposite personality types in my team. Any tips?",
+    author: {
+      name: "Michael Chen",
+      avatar: "https://source.unsplash.com/random/100x100?portrait=2",
+      personalityType: "The Mediator",
+      badges: ["Rising Star"],
+      points: 850,
+    },
+    likes: 15,
+    comments: 8,
+    timestamp: "4 hours ago",
+  },
+];
+
+const UPCOMING_EVENTS: Event[] = [
+  {
+    id: "1",
+    title: "Understanding Different Personality Types in the Workplace",
+    date: "2024-04-15T15:00:00",
+    host: "Dr. Emily Watson",
+    participants: 156,
+  },
+  {
+    id: "2",
+    title: "Personality Type and Career Choice Workshop",
+    date: "2024-04-20T18:30:00",
+    host: "Career Coach Mark Stevens",
+    participants: 89,
+  },
+];
+
+const ACTIVE_POLLS: Poll[] = [
+  {
+    id: "1",
+    question: "Which personality type do you think is the most creative?",
+    options: ["The Visionary", "The Artist", "The Innovator", "The Dreamer"],
+    votes: [45, 32, 28, 19],
+  },
+];
 
 const Community = () => {
+  const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
   const [newPost, setNewPost] = useState("");
   const { toast } = useToast();
-  const { user } = useAuth();
-  const { posts } = usePosts();
-  const { polls } = usePolls();
-  const { events } = useEvents();
 
-  const handleSubmitPost = async () => {
-    if (!newPost.trim() || !user) return;
+  const handleSubmitPost = () => {
+    if (!newPost.trim()) return;
+    
+    const post: Post = {
+      id: posts.length + 1,
+      content: newPost,
+      author: {
+        name: "Current User",
+        avatar: "https://source.unsplash.com/random/100x100?portrait=0",
+        personalityType: "Guest",
+        badges: [],
+        points: 0,
+      },
+      likes: 0,
+      comments: 0,
+      timestamp: "Just now",
+    };
 
-    try {
-      const { error } = await supabase
-        .from('posts')
-        .insert([
-          {
-            content: newPost,
-            user_id: user.id,
-          }
-        ]);
-
-      if (error) throw error;
-
-      setNewPost("");
-      toast({
-        title: "Success",
-        description: "Your post has been published!",
-      });
-    } catch (error) {
-      console.error('Error creating post:', error);
-      toast({
-        title: "Error",
-        description: "Failed to create post. Please try again.",
-        variant: "destructive",
-      });
-    }
+    setPosts([post, ...posts]);
+    setNewPost("");
+    toast({
+      title: "Post created",
+      description: "Your post has been published successfully!",
+    });
   };
 
-  const handleReport = async (postId: number) => {
-    // In a real application, you would implement report functionality
-    toast({
-      title: "Post reported",
-      description: "Thank you for helping keep our community safe.",
-    });
+  const handleReport = (postId: number) => {
+    setPosts(posts.map(post => 
+      post.id === postId 
+        ? { ...post, isReported: true }
+        : post
+    ));
   };
 
   const handleSearch = (query: string, filters: string[]) => {
     console.log("Searching with query:", query, "and filters:", filters);
     // Implement search logic here
   };
-
-  if (!posts || !polls || !events) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <main className="container mx-auto px-4 py-24">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -115,17 +148,17 @@ const Community = () => {
 
             {/* Sidebar */}
             <div className="lg:w-80 space-y-6">
-              <Leaderboard users={posts.slice(0, 5).map(post => ({
-                id: post.id,
+              <Leaderboard users={MOCK_POSTS.map(post => ({
+                id: post.id.toString(),
                 name: post.author.name,
                 avatar: post.author.avatar,
                 points: post.author.points,
                 badges: post.author.badges,
               }))} />
               
-              <EventsList events={events} />
+              <EventsList events={UPCOMING_EVENTS} />
               
-              <PollsList polls={polls} />
+              <PollsList polls={ACTIVE_POLLS} />
             </div>
           </div>
         </div>
