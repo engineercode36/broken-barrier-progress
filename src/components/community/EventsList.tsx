@@ -1,7 +1,14 @@
 import { Calendar, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Event } from "@/types/community";
+
+interface Event {
+  id: string;
+  title: string;
+  date: string;
+  host: string;
+  participants: number;
+}
 
 interface EventsListProps {
   events: Event[];

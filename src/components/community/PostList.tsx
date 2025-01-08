@@ -3,7 +3,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Heart, MessageSquare, Flag, Trophy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Post } from "@/types/community";
+
+interface Post {
+  id: number;
+  content: string;
+  author: {
+    name: string;
+    avatar: string;
+    personalityType: string;
+    badges: string[];
+    points: number;
+  };
+  likes: number;
+  comments: number;
+  timestamp: string;
+  isReported?: boolean;
+}
 
 interface PostListProps {
   posts: Post[];
@@ -55,12 +70,12 @@ export const PostList = ({ posts, onReport }: PostListProps) => {
           <div className="flex items-center gap-4 text-gray-500">
             <button 
               className={`flex items-center gap-1 hover:text-blue-600 ${
-                likedPosts.includes(Number(post.id)) ? 'text-blue-600' : ''
+                likedPosts.includes(post.id) ? 'text-blue-600' : ''
               }`}
-              onClick={() => handleLike(Number(post.id))}
+              onClick={() => handleLike(post.id)}
             >
               <Heart className="h-5 w-5" />
-              <span>{post.likes + (likedPosts.includes(Number(post.id)) ? 1 : 0)}</span>
+              <span>{post.likes + (likedPosts.includes(post.id) ? 1 : 0)}</span>
             </button>
             <button className="flex items-center gap-1 hover:text-blue-600">
               <MessageSquare className="h-5 w-5" />
@@ -71,7 +86,7 @@ export const PostList = ({ posts, onReport }: PostListProps) => {
                 post.isReported ? 'text-red-600' : ''
               }`}
               onClick={() => {
-                onReport(Number(post.id));
+                onReport(post.id);
                 toast({
                   title: "Post reported",
                   description: "Thank you for helping keep our community safe.",

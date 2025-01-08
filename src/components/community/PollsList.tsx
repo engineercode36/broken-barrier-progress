@@ -1,6 +1,12 @@
 import { PieChart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Poll } from "@/types/community";
+
+interface Poll {
+  id: string;
+  question: string;
+  options: string[];
+  votes: number[];
+}
 
 interface PollsListProps {
   polls: Poll[];

@@ -1,9 +1,11 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "@/integrations/supabase/client";
+import { SignInForm } from "./SignInForm";
+import { SignUpForm } from "./SignUpForm";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -11,19 +13,8 @@ interface AuthModalProps {
 }
 
 export const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed:", event, session);
-      if (event === "SIGNED_IN") {
-        onClose();
-        navigate("/");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate, onClose]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -34,25 +25,41 @@ export const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
             background: 'linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)'
           }}
         >
-          <h2 className="text-white text-2xl font-bold text-center mt-12">Personality Arc</h2>
+          <h2 className="text-white text-2xl font-bold text-center mt-12 font-cursive">Personality Arc</h2>
         </div>
         
         <div className="relative pt-16">
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#2563eb',
-                    brandAccent: '#1d4ed8',
-                  },
-                },
-              },
-            }}
-            providers={[]}
-          />
+          {!showForgotPassword ? (
+            <Tabs defaultValue="signin" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+              <TabsContent value="signin">
+                <SignInForm onForgotPassword={() => setShowForgotPassword(true)} />
+              </TabsContent>
+              <TabsContent value="signup">
+                <SignUpForm />
+              </TabsContent>
+            </Tabs>
+          ) : (
+            <div>
+              <ForgotPasswordForm onBack={() => setShowForgotPassword(false)} />
+            </div>
+          )}
+          
+          <div className="mt-6 text-center">
+            <Button 
+              variant="outline"
+              onClick={() => {
+                navigate('/practice');
+                onClose();
+              }}
+              className="w-full transition-all duration-300 hover:bg-blue-50 hover:border-blue-200 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]"
+            >
+              Go to Practice Page
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
