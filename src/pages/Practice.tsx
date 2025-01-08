@@ -8,13 +8,12 @@ import { PracticeTimer } from "@/components/practice/PracticeTimer";
 import { QuestionActions } from "@/components/practice/QuestionActions";
 import { MultipleChoice } from "@/components/practice/MultipleChoice";
 import { Sidebar } from "@/components/practice/Sidebar";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import ModeDialog from "@/components/practice/ModeDialog";
 
 const Practice = () => {
   const [showObjectiveModal, setShowObjectiveModal] = useState(false);
   const [showModeDialog, setShowModeDialog] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(1500); // 25 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(1500);
   const [isPaused, setIsPaused] = useState(false);
   const [goToQuestion, setGoToQuestion] = useState("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -23,10 +22,12 @@ const Practice = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState("Chapter 1");
   const [selectedMode, setSelectedMode] = useState("Timer Mode");
+  const [totalQuestions, setTotalQuestions] = useState(50);
+  const [currentQuestion, setCurrentQuestion] = useState(20);
 
   const handleAnswerSelect = (answerId: string) => {
     setSelectedAnswer(answerId);
-    setIsCorrect(answerId === "a"); // Example: assuming 'a' is correct
+    setIsCorrect(answerId === "a");
     setTimeout(() => {
       setSelectedAnswer(null);
       setIsCorrect(null);
@@ -46,6 +47,8 @@ const Practice = () => {
           setSelectedChapter={setSelectedChapter}
           selectedMode={selectedMode}
           setSelectedMode={setSelectedMode}
+          totalQuestions={totalQuestions}
+          currentQuestion={currentQuestion}
         />
 
         <main className="container mx-auto px-4 pt-8 pb-12">
@@ -55,11 +58,11 @@ const Practice = () => {
             onTogglePause={() => setIsPaused(!isPaused)}
           />
 
-          {/* Progress Bar */}
           <div className="mb-8">
-            <Progress value={progress} className="h-2" />
-            <div className="flex justify-end text-sm text-gray-600 mt-1">
-              <span>Objective Progress: {progress}%</span>
+            <Progress value={progress} className="h-2 bg-purple-100" />
+            <div className="flex justify-between text-sm text-gray-600 mt-1">
+              <span>{currentQuestion} out of {totalQuestions} questions</span>
+              <span>Progress: {progress}%</span>
             </div>
           </div>
 
@@ -67,7 +70,6 @@ const Practice = () => {
           
           <QuestionTabs />
 
-          {/* Answer Choices */}
           <div className="mt-8">
             <MultipleChoice
               onSelect={(value) => handleAnswerSelect(value.toString())}
@@ -91,6 +93,15 @@ const Practice = () => {
           onSetObjective={(value) => {
             console.log("Objective set:", value);
             setShowObjectiveModal(false);
+          }}
+        />
+
+        <ModeDialog
+          open={showModeDialog}
+          onOpenChange={setShowModeDialog}
+          onSetMode={(mode) => {
+            setSelectedMode(mode);
+            setShowModeDialog(false);
           }}
         />
       </div>

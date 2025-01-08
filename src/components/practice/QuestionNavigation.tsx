@@ -22,9 +22,9 @@ export const QuestionNavigation = ({
       <Button
         variant="outline"
         onClick={onPrevious}
-        className="rounded-full"
+        className="rounded-full border-purple-500"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-4 w-4 text-purple-500" />
       </Button>
 
       <div className="relative max-w-[200px]">
@@ -33,12 +33,12 @@ export const QuestionNavigation = ({
           placeholder="Go to question..."
           value={goToQuestion}
           onChange={(e) => onGoToQuestionChange(e.target.value)}
-          className="rounded-full pr-10"
+          className="rounded-full pr-10 border-purple-500"
         />
         <Button
           size="icon"
           variant="ghost"
-          className="absolute right-1 top-1/2 -translate-y-1/2"
+          className="absolute right-1 top-1/2 -translate-y-1/2 text-purple-500"
           onClick={onGoToQuestion}
         >
           <GoIcon className="h-4 w-4" />
@@ -48,9 +48,9 @@ export const QuestionNavigation = ({
       <Button
         variant="outline"
         onClick={onNext}
-        className="rounded-full"
+        className="rounded-full border-purple-500"
       >
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-4 w-4 text-purple-500" />
       </Button>
     </div>
   );
