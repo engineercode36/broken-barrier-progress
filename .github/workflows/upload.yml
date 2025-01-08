@@ -27,7 +27,7 @@ jobs:
       - name: Upload files
         run: |
           mkdir -p upload_folder
-          cp -r '/mnt/c/Users/Nati/Desktop/Rigorous 2025/0/*' upload_folder/
+          cp -r '/mnt/c/Users/Nati/Desktop/Rigorous/0/*' upload_folder/
 
       # Step 4: Commit and push the changes
       - name: Commit and push files
