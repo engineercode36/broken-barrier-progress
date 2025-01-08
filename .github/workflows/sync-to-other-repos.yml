@@ -1,0 +1,33 @@
+name: Sync with Other Repositories
+
+on:
+  push:
+    branches:
+      - main  # Trigger when changes are pushed to the main branch
+  workflow_dispatch:  # Allow manual runs
+
+jobs:
+  sync-with-others:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Central Repository
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+       # Sync with Repo 8: portfolio-pulse-portal-41
+      - name: Pull from portfolio-pulse-portal-41
+        run: |
+          git remote add repo8 https://${{ secrets.TOKEN_PORTFOLIO_PULSE }}@github.com/ausking12/portfolio-pulse-portal-41.git
+          git pull repo8 main --allow-unrelated-histories || echo "No changes to pull"
+    
+
+      # Push Updates Back to All Repositories
+      - name: Push to All Repositories
+        run: |
+          for repo in repo8; do
+            git push $repo main || echo "No changes to push to $repo"
+          done
