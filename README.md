@@ -1,16 +1,16 @@
-# Welcome to your divivine project we have done it
+# Welcome to your Lovable project
 
 ## Project info
 
-URL**: https://lovable.dev/projects/212f8370-97e8-4feb-ae60-5a281b218ed8
+**URL**: https://lovable.dev/projects/4bfafc08-52a3-4cd1-bc86-3859d8a8fc2b
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use premium**
+**Use Lovable**
 
-Simply visit the (https://lovable.dev/projects/212f8370-97e8-4feb-ae60-5a281b218ed8) and start prompting.
+Simply visit the [Lovable Project](https://lovable.dev/projects/4bfafc08-52a3-4cd1-bc86-3859d8a8fc2b) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
@@ -62,7 +62,7 @@ This project is built with .
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/212f8370-97e8-4feb-ae60-5a281b218ed8) and click on Share -> Publish.
+Simply open [Lovable](https://lovable.dev/projects/4bfafc08-52a3-4cd1-bc86-3859d8a8fc2b) and click on Share -> Publish.
 
 ## I want to use a custom domain - is that possible?
 
