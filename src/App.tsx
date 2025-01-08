@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Practice from "./pages/Practice";
+import Chat from "./pages/Chat";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/practice" element={<Practice />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/" element={<Navigate to="/signin" replace />} />
         </Routes>
       </BrowserRouter>
