@@ -26,7 +26,7 @@ jobs:
           REPOS=("https://github.com/canlife4ever/note-haven-syntax-21.git")
 
           # Hardcoded GitHub Token for authentication
-          TOKEN="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"
+          TOKEN="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"
           git config --global credential.helper store
           echo "https://${TOKEN}:@github.com" > ~/.git-credentials
 
