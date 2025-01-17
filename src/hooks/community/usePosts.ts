@@ -34,7 +34,7 @@ export const usePosts = () => {
       }
 
       return data.map((post): Post => ({
-        id: post.id,
+        id: parseInt(post.id),
         content: post.content,
         author: {
           name: post.profiles.username || 'Anonymous',

@@ -32,7 +32,6 @@ export const usePolls = () => {
       }
 
       return data.map((poll): Poll => {
-        // Safely cast the options from Json to string[]
         const options = Array.isArray(poll.options) ? poll.options as string[] : [];
         
         return {
