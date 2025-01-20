@@ -10,51 +10,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the Source Repository
       - name: Checkout Main Repository
         uses: actions/checkout@v3
         with:
-          repository: engineercode36/broken-barrier-progress
+          repository: engineercode36/broken-barrier-progress  # The main repo containing this workflow
 
+      # Step 2: Set Up Git User for Pushing Changes
       - name: Set Up Git
         run: |
-          git config user.name "GitHub Action Bot"
-          git config user.email "actions@github.com"
+          git config user.name "GitHub Action Bot"  # Set the username for git actions
+          git config user.email "actions@github.com"  # Set the email for git actions
 
+      # Step 3: Sync Changes with Other Repositories
       - name: Sync with Other Repositories
         run: |
-          # List of repositories to sync (no need to include the main repo)
-          REPOS=("https://github.com/canlife4ever/note-haven-syntax-21.git")
-
-          # Hardcoded GitHub Token for authentication
-          TOKEN="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"
+          # List of repositories to sync (update this list with the new repo)
+          REPOS=(
+            "https://github.com/canlife4ever/note-haven-syntax-21.git"
+            "https://github.com/braman7/opti-progress-hub.git"
+          )
+          # GitHub Token for authentication
+          TOKEN="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"  # Replace with a valid GitHub token
+          # Configure credentials for pushing
           git config --global credential.helper store
           echo "https://${TOKEN}:@github.com" > ~/.git-credentials
-
-          # Check out the repository
+          
+          # Verify if .git folder exists
           if [ ! -d ".git" ]; then
-            echo "Repository not found. Exiting."
+            echo "Repository not initialized as git. Exiting."
             exit 1
           fi
 
-          # Loop through each repository and push changes
+          # Loop through repositories and push changes
           for repo in "${REPOS[@]}"; do
             echo "Syncing with $repo"
-
-            # Add remote only if not already added
-            if ! git remote get-url target &>/dev/null; then
+            # Add remote target if it doesn't already exist
+            if ! git remote | grep -q "target"; then
               git remote add target "$repo"
             fi
-
-            # Push changes to the target repository
+            # Push all branches and tags to the target repo
             if git push --mirror target; then
               echo "Successfully pushed to $repo"
             else
               echo "Failed to push to $repo"
             fi
-
-            # Remove the remote after sync
+            # Remove the remote target after sync
             git remote remove target
           done
 
-          # Remove the git-credentials after the sync is done
+          # Clean up credentials after use
           rm -f ~/.git-credentials
