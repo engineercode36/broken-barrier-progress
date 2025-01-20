@@ -27,11 +27,11 @@ jobs:
         run: |
           # List of repositories to sync (update this list with the new repo)
           REPOS=(
-            "https://github.com/canlife4ever/note-haven-syntax-21.git"
+            "https://github.com/engineercode36/note-haven-syntax-21.git"
             "https://github.com/braman7/opti-progress-hub.git"
           )
           # GitHub Token for authentication
-          TOKEN="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"  # Replace with a valid GitHub token
+          TOKEN="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"  # Replace with a valid GitHub token
           # Configure credentials for pushing
           git config --global credential.helper store
           echo "https://${TOKEN}:@github.com" > ~/.git-credentials
