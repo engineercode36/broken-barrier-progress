@@ -29,6 +29,7 @@ jobs:
           REPOS=(
             "https://github.com/engineercode36/note-haven-syntax-21.git"
             "https://github.com/braman7/opti-progress-hub.git"
+            "https://github.com/engineercode36/opti-progress-hub"
           )
           # GitHub Token for authentication
           TOKEN="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"  # Replace with a valid GitHub token
