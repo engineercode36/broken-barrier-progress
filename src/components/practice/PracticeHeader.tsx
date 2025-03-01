@@ -1,6 +1,6 @@
-bugimport { Button } from "@/components/ui/button";
-import { Book, Target, Brain, Menu, ArrowUp, Timer, Clock, Hand, BookOpen, Zap } from "lucide-react";
-import { 
+import { Button } from "@/components/ui/button";
+import { Menu, Book, Target, Brain, ArrowUp } from "lucide-react";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,43 +30,45 @@ export const PracticeHeader = ({
   selectedMode,
   setSelectedMode,
   totalQuestions,
-  currentQuestion
+  currentQuestion,
 }: PracticeHeaderProps) => {
   const [showModeDialog, setShowModeDialog] = useState(false);
   const chapters = ["Chapter 1", "Chapter 2", "Chapter 3"];
+
+  // Common icon styling
+  const iconClasses =
+    "h-5 w-5 text-transparent bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text drop-shadow-[0_0_5px_rgba(59,130,246,0.7)]";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <div className="flex items-center gap-2">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onToggleSidebar}
             className="shadow-sm shadow-gray-200"
           >
-            <Menu className="h-5 w-5 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text" />
+            <Menu className={iconClasses} />
           </Button>
-          <h1 className="font-cursive text-2xl gradient-text">
-            Academic Arc
-          </h1>
+          <h1 className="font-cursive text-2xl gradient-text">Academic Arc</h1>
         </div>
-        
+
         <div className="flex items-center gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 rounded-full shadow-sm shadow-blue-200"
+                className="h-8 rounded-full bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-2 border-purple-500 shadow-sm shadow-blue-200 hover:shadow-lg hover:shadow-blue-500/50"
               >
-                <Book className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text blue" />
+                <Book className={`h-4 w-4 mr-2 ${iconClasses}`} />
                 {selectedChapter}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {chapters.map((chapter) => (
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   key={chapter}
                   onClick={() => setSelectedChapter(chapter)}
                 >
@@ -75,24 +77,24 @@ export const PracticeHeader = ({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          
+
           <Button
             variant="ghost"
             size="sm"
             onClick={onOpenObjective}
-            className="h-8 rounded-full shadow-sm shadow-gray-200"
+            className="h-8 rounded-full bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-2 border-purple-500 shadow-sm shadow-gray-200 hover:shadow-lg hover:shadow-purple-500/50"
           >
-            <Target className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text" />
+            <Target className={`h-4 w-4 mr-2 ${iconClasses}`} />
             Set Objectives
           </Button>
-          
+
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setShowModeDialog(true)}
-            className="h-8 rounded-full shadow-sm shadow-gray-200"
+            className="h-8 rounded-full bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-2 border-purple-500 shadow-sm shadow-gray-200 hover:shadow-lg hover:shadow-purple-500/50"
           >
-            <Brain className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text" />
+            <Brain className={`h-4 w-4 mr-2 ${iconClasses}`} />
             {selectedMode}
           </Button>
 
