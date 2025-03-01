@@ -10,10 +10,10 @@ interface MultipleChoiceProps {
 
 export const MultipleChoice = ({ onSelect, selectedValue, isCorrect }: MultipleChoiceProps) => {
   const choices = [
-    { id: "a", text: "Option AA" },
-    { id: "b", text: "Option B" },
-    { id: "c", text: "Option C" },
-    { id: "d", text: "Option D" }
+    { id: "a", label: "A", text: "Option AA" },
+    { id: "b", label: "B", text: "Option B" },
+    { id: "c", label: "C", text: "Option C" },
+    { id: "d", label: "D", text: "Option D" }
   ];
 
   return (
@@ -37,6 +37,9 @@ export const MultipleChoice = ({ onSelect, selectedValue, isCorrect }: MultipleC
             variant="ghost"
             onClick={() => onSelect(choice.id)}
           >
+            <span className="inline-block w-8 h-8 mr-2 text-center rounded-full bg-purple-500 text-white">
+              {choice.label}
+            </span>
             {choice.text}
             {selectedValue === choice.id && (
               <motion.div
