@@ -10,7 +10,7 @@ interface MultipleChoiceProps {
 
 export const MultipleChoice = ({ onSelect, selectedValue, isCorrect }: MultipleChoiceProps) => {
   const choices = [
-    { id: "a", text: "Option A" },
+    { id: "a", text: "Option AA" },
     { id: "b", text: "Option B" },
     { id: "c", text: "Option C" },
     { id: "d", text: "Option D" }
