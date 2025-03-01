@@ -30,7 +30,7 @@ export const MultipleChoice = ({ onSelect, selectedValue, isCorrect }: MultipleC
                 ? isCorrect
                   ? "bg-gradient-to-r from-green-400 to-green-600 text-white"
                   : "bg-gradient-to-r from-red-400 to-red-600 text-white"
-                : "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-2 border-purple-500"
+                : "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-2 border-grey-500"
               }
               ${selectedValue === choice.id ? "" : "hover:shadow-lg hover:shadow-purple-500/50"}
             `}
