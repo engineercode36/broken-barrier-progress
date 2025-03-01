@@ -60,7 +60,7 @@ export const PracticeHeader = ({
                 size="sm"
                 className="h-8 rounded-full shadow-sm shadow-blue-200"
               >
-                <Book className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text" />
+                <Book className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text blue" />
                 {selectedChapter}
               </Button>
             </DropdownMenuTrigger>
