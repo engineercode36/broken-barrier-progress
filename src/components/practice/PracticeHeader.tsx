@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+bugimport { Button } from "@/components/ui/button";
 import { Book, Target, Brain, Menu, ArrowUp, Timer, Clock, Hand, BookOpen, Zap } from "lucide-react";
 import { 
   DropdownMenu,
@@ -58,7 +58,7 @@ export const PracticeHeader = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 rounded-full shadow-sm shadow-gray-200"
+                className="h-8 rounded-full shadow-sm shadow-blue-200"
               >
                 <Book className="h-4 w-4 mr-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text" />
                 {selectedChapter}
